@@ -1,0 +1,221 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        .card {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .card img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .link {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none !important;
+            border-radius: 3px;
+        }
+
+        .link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .delete-button {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+       textarea {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical; 
+    }
+
+    button.comment-button {
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button.comment-button:hover {
+        background-color: #218838;
+    }
+
+    .comments-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .comment-item {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+     .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .comment-author {
+        font-weight: bold;
+        color: #365899;
+    }
+    .edit-delete-links {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-delete-links a {
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.edit-delete-links a:hover {
+    background-color: #086f08;
+    color: #fff;
+}
+.confirm-delete-form {
+    display: inline-block;
+}
+
+.confirm-delete-form button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.confirm-delete-form button:hover {
+    background-color: #dd1515;
+    color: white;
+}  
+
+    .comment-body {
+        font-size: 14px;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include 'partials/navbar.html.twig' %}
+    <br/>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                {% if post.imagePath %}
+                    <img src="{{ asset('uploads/images/' ~ post.imagePath) }}" alt="Image">
+                {% else %}
+                    No image available
+                {% endif %}
+            </div>
+        </div>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <h5 style="text-align: center;">{{ post.title }}</h5>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">{{ post.content }}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <span style="font-weight: bold;">Created at : </span> {{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div>
+<div>
+    <h3>Comments:</h3>
+    <ul class="comments-list">
+        {% for comment in post.comments %}
+            <li class="comment-item">
+                <div class="comment-header">
+                    <strong class="comment-author">{{ comment.userId }}</strong>
+                    <div class="edit-delete-links">
+                        {% if comment.userId == app.user %}
+                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="edit">Edit</a>
+                            {{ include('comment/confirm_delete.html.twig') }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="comment-body">
+                    <p>{{ comment.content }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<form method="POST" action="{{ path('app_posts_comment', {'id': post.id}) }}">
+    <textarea class="form-control" name="comment" rows="10" placeholder="Enter your comment" style="width: 100%; max-width: 1200px; padding: 5px;"></textarea><br/>
+    <button class="comment-button" style="margin-top: 10px;">comment</button>
+</form>
+
+<div style="text-align: center;">
+    <div style="display: flex; justify-content: center; align-items: center;">
+            <a href="{{ path('app_posts_index') }}" class="btn btn-primary">back to list</a>&nbsp;&nbsp;
+
+            {% if app.user == post.getAuthorId %}
+
+        <a href="{{ path('app_posts_edit', {'id': post.id}) }}" class="btn btn-primary">edit</a>&nbsp;&nbsp;
+        <div style="align-self: center;">{{ include('posts/_delete_form.html.twig') }}</div>
+          {% endif %}
+    </div>
+</div>
+<br/><br/>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

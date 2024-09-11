@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts index{% endblock %}
+
+{% block body %}
+{% include 'partials/navbar.html.twig' %}
+<br/>
+{% include 'partials/hero_section.html.twig' %}
+
+<div class="container text-center">
+    <br/>
+
+    <div class="row justify-content-center">
+        {% for post in posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if post.imagePath %}
+                        <img src="{{ asset('uploads/images/' ~ post.imagePath) }}" class="card-img-top" alt="Image" style="max-width: 400px; max-height: 400px;">
+                    {% else %}
+                        <div class="no-image-placeholder">No image available</div>
+                    {% endif %}
+                    <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.content|split(' ')|slice(0, 41)|join(' ') }}</p>
+                            <p class="card-text">Created by: {{ post.usernameUser  }}</p>
+                                    <a href="{{ path('app_posts_show', {'id': post.id}) }}" class="btn btn-primary">See more</a>
+
+                            <p class="card-text"><small class="text-muted">{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</small></p>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No records found</p>
+        {% endfor %}
+    </div>
+ 
+<br/>
+</div>
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}

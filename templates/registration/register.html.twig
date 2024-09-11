@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+
+/* Ajoutez ce style dans votre fichier CSS ou entre les balises <style> dans votre template Twig */
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    text-align: center;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+.form-check-input {
+            margin-left: 1%; /* Ajoute un espacement de 2 cm à gauche de la case à cocher */
+        }
+
+.error {
+    color: red;
+    margin-top: 5px;
+}
+
+    </style>
+{% endblock %}
+
+{% block body %}
+<br/><br/>
+    <h1>Register</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+
+    <div class="form-group">
+    {{ form_label(registrationForm.username) }}
+    {{ form_widget(registrationForm.username, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_errors(registrationForm.username) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(registrationForm.email) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(registrationForm.plainPassword, 'Password') }}
+        {{ form_widget(registrationForm.plainPassword, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(registrationForm.plainPassword) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(registrationForm.agreeTerms) }}
+        {{ form_widget(registrationForm.agreeTerms, { 'attr': {'class': 'form-check-input'} }) }}
+        {{ form_errors(registrationForm.agreeTerms) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+{{ form_end(registrationForm) }}
+{% endblock %}

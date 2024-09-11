@@ -1,0 +1,52 @@
+<style>
+    .hero-section {
+        position: relative;
+        text-align: center;
+    }
+
+    .hero-section img {
+        width: 100%;
+        height: 600px; 
+        object-fit: cover; 
+    }
+
+    .hero-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        z-index: 1; 
+    }
+
+    .hero-content h1 {
+        font-family: 'Lobster', cursive; 
+        font-size: 3em; 
+    }
+
+    .btn-primary {
+        font-family: 'Arial', sans-serif; 
+        background-color: #117A65;
+        color: white; 
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #2E86C1;
+    }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+<div class="hero-section">
+    <img src="{{ asset('https://images.pexels.com/photos/1579413/pexels-photo-1579413.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') }}" alt="Welcome Image">
+    <div class="hero-content">
+        <h1>Welcome in the world of blog writing</h1>
+        <a href="{{ path('app_posts_new') }}" class="btn btn-primary">Write a Blog</a>
+    </div>
+</div>
