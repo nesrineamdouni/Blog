@@ -203,7 +203,7 @@ public function editComment(Request $request, Comments $comment, EntityManagerIn
     ]);
 }
 
-#[Route('/{id}', name: 'app_posts_delete', methods: ['POST'])]
+#[Route('/delete/{id}', name: 'app_posts_delete', methods: ['POST'])]
 public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
 {
     if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
@@ -220,8 +220,8 @@ public function delete(Request $request, Posts $post, EntityManagerInterface $en
         $entityManager->remove($post);
         $entityManager->flush();
     }
-
     return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
+
 }
 
 }

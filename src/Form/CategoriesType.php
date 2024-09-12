@@ -6,6 +6,7 @@ use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class CategoriesType extends AbstractType
 {
@@ -14,7 +15,10 @@ class CategoriesType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('created_at')
+            ->add('created_at', DateTimeType::class, [
+                'widget' => 'single_text',
+                // Ajoutez d'autres options si nécessaire
+            ])
         ;
     }
 

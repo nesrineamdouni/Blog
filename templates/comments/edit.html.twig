@@ -1,13 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Comments{% endblock %}
+{% block title %}Edit Comment{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card {
+            margin-top: 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Comments</h1>
 
-    {{ include('comments/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_comments_index') }}">back to list</a>
-
-    {{ include('comments/_delete_form.html.twig') }}
+    <div class="container">
+        <h1 class="text-center mt-4">Edit Comment</h1>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'class': 'my-4'}}) }}
+                        <div class="form-group">
+                            {{ form_row(form.content, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+                        </div>
+                        <div class="btn-container">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a href="{{ path('app_comments_index') }}" class="btn btn-secondary">Back to List</a>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
 {% endblock %}
